@@ -77,14 +77,14 @@ To determine whether purchasing behavior reinforced the revenue declines, I comp
 
 ![Monthly Orders Comparison](/images/6_monthly_orders_comparison.png)
 
-*Figure 5a. Comparison of order volume for 2020 vs. 2019 and 2023 vs. 2022. Blue lines show the behavior of the years of interest, gray lines show the previous years, and coral lines show the percentage change in the year of interest compared to the previous year.*
+*Figure 5a. Comparison of order volume for 2020 vs. 2019 and 2023 vs. 2022. **Blue** lines show the behavior of the years of interest, **gray** lines show the previous years, and **coral** lines show the percentage change in the year of interest compared to the previous year.*
 
 
 <h4 align="center">Monthly Revenue per Order Comparison</h4>
 
 ![Monthly Revenue per Order Comparison](/images/6_monthly_revenue_per_order_comparison.png)
 
-*Figure 5b. Comparison of revenue per order for 2020 vs. 2019 and 2023 vs. 2022. Blue lines show the behavior of the years of interest, gray lines show the previous years, and coral lines show the percentage change in the year of interest compared to the previous year.*
+*Figure 5b. Comparison of revenue per order for 2020 vs. 2019 and 2023 vs. 2022. **Blue** lines show the behavior of the years of interest, **gray** lines show the previous years, and **coral** lines show the percentage change in the year of interest compared to the previous year.*
 
 #### Key Findings
 
