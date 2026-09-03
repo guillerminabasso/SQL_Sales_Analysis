@@ -12,7 +12,7 @@ I developed my own analytical approach, progressively breaking down revenue into
 
 **Why did revenue decline in 2020 and 2023, and what factors contributed to these declines?**
 
-![Revenue Growth by Year](images\1_revenue_growth_by_year.png)
+![Revenue Growth by Year](images/1_revenue_growth_by_year.png)
 <p align="center"><em>Figure 1. Revenue Growth by Year.</em></p>
 
 
@@ -20,7 +20,7 @@ The analysis starts by examining revenue growth over time, which highlights sign
 
 ## Analysis Approach
 
-![Analysis Approach](images\2_analysis_approach.png)
+![Analysis Approach](images/2_analysis_approach.png)
 <p align="center"><em>Figure 2. Analysis Approach.</em></p>
 
 To investigate the revenue declines, I progressively decomposed revenue into its main drivers and analyzed each component separately.
