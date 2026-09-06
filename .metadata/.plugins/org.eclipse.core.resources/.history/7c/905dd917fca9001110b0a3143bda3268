@@ -1,0 +1,15 @@
+SELECT
+    purchase_year,
+    total_customers,
+    LAG(total_customers) OVER (ORDER BY purchase_year) AS prev_year_customers,
+    ROUND(
+        100.0 * (total_customers - LAG(total_customers) OVER (ORDER BY purchase_year))
+        / LAG(total_customers) OVER (ORDER BY purchase_year), 1
+    ) AS pct_change
+FROM (
+    SELECT EXTRACT(YEAR FROM orderdate) AS purchase_year,
+           COUNT(DISTINCT customerkey) AS total_customers
+    FROM sales
+    GROUP BY purchase_year
+) yearly
+ORDER BY purchase_year;
