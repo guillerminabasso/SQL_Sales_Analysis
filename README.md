@@ -10,6 +10,9 @@ I developed my own analytical approach, progressively breaking down revenue into
 
 ## Dataset
 
+The analysis is based on the **Contoso** sample sales dataset — a synthetic dataset used by Microsoft to simulate a fictional retail company's business scenarios. It was obtained via Luke Barousse's ["Intermediate SQL for Data Analytics"](https://www.lukebarousse.com/int-sql) course, and covers the period from **2015-01-01 to 2024-04-20** (the 2024 period is partial, which is why it was excluded from the year-over-year decline analysis).
+
+Raw data files are not included in this repository due to size. The dataset can be downloaded [here (https://github.com/lukebarousse/Int_SQL_Data_Analytics_Course/releases/download/v.0.0.0/contoso_100k.sql). 
 The analysis is based on a sales dataset (originally used for a SQL tutorial) covering the period from **2015-01-01 to 2024-04-20** (the 2024 period is partial, which is why it was excluded from the year-over-year decline analysis).
 
 **Scale:**
