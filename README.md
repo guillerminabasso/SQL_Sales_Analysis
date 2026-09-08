@@ -10,8 +10,6 @@ I developed my own analytical approach, progressively breaking down revenue into
 
 ## Dataset
 
-## Dataset
-
 The analysis is based on a sales dataset (originally used for a SQL tutorial) covering the period from **2015-01-01 to 2024-04-20** (the 2024 period is partial, which is why it was excluded from the year-over-year decline analysis).
 
 **Scale:**
