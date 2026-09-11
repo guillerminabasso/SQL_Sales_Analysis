@@ -174,14 +174,14 @@ month.
 
 | 2019 vs 2020 | 2022 vs 2023 |
 |:---:|:---:|
-| ![New Customers 2019 vs 2020](images/4_new_2019_vs_2020.png) | ![New Customers 2020 vs 2023](images/4_new_2022_vs_2023.png) |
+| ![New Customers 2019 vs 2020](images/4_new_2019_vs_2020_v2.png) | ![New Customers 2020 vs 2023](images/4_new_2022_vs_2023_v2.png) |
 | *Figure 4a. New customer acquisition did not fail all at once: the year-over-year decline started at around -25% in January and worsened steadily throughout the year, reaching approximately -80% by November — an accelerating deterioration sustained almost continuously.* | *Figure 4b. New customer acquisition in 2023 was consistently weaker than in 2022 across the year, moving from around -10% in January to about -40% by year-end — a persistent but comparatively milder decline than the one observed in 2020.* |
 
 <h4 align="center">Existing Customers</h4>
 
 | 2019 vs 2020 | 2022 vs 2023 |
 |:---:|:---:|
-| ![Existing Customers 2019 vs 2020](images/4_new_2022_vs_2023.png) | ![Existing Customers 2022 vs 2023](images/4_existing_2022_vs_2023.png) |
+| ![Existing Customers 2019 vs 2020](images/4_existing_2019_vs_2020_v2.png) | ![Existing Customers 2022 vs 2023](images/4_existing_2022_vs_2023_v2.png) |
 | *Figure 4c. Existing customer activity moved in the opposite direction over the course of the year: it started around +25% above 2019, but reversed sharply from March onward, ending the year near -80% — turning from a growth signal into one of the steepest declines observed in the entire dataset* | *Figure 4d. Existing customer activity in 2023 also reversed over the year, from roughly +40% above 2022 in early months to about -10% by year-end — a softer version of the reversal seen in existing customers during 2020, rather than a full collapse* | 
 
 
