@@ -187,21 +187,126 @@ month.
 
 #### Key Findings
 
-2020:
+**2020:**
 
-- New customers declined throughout the year compared with 2019, with a decrease of around 20% in January and up to 80% by November. This indicates a significant deterioration in customer acquisition.
+- **New customers** declined throughout the year compared with 2019, with a decrease of around 20% in January and up to 80% by November. This indicates a significant deterioration in customer acquisition.
 
-- Existing customers showed positive variation compared with 2019 at the beginning of the year. However, from March onward, their numbers declined continuously, reaching decreases of up to 80% compared with the previous year. This indicates a substantial decline in activity among existing customers.
+- **Existing customers** showed positive variation compared with 2019 at the beginning of the year. However, from March onward, their numbers declined continuously, reaching decreases of up to 80% compared with the previous year. This indicates a substantial decline in activity among existing customers.
 
 - The decline in new customers was the main contributor to the overall decrease in customer volume, particularly from the beginning of the year. However, the decline in existing customers from March onward further amplified the reduction in customer volume.
 
-2023:
+**2023:**
 
-- New customers were consistently lower than in 2022, with monthly decreases reaching around 50%. This indicates weaker customer acquisition throughout the year.
+- **New customers** were consistently lower than in 2022, with monthly decreases reaching around 50%. This indicates weaker customer acquisition throughout the year.
 
-- Existing customers increased compared with 2022 from January to May. However, this positive performance weakened over the following months, with existing customers declining by around 10% compared with the previous year toward the end of the year.
+- **Existing customers** increased compared with 2022 from January to May. However, this positive performance weakened over the following months, with existing customers declining by around 10% compared with the previous year toward the end of the year.
 
 - New customers appear to have been the main contributor to the decline in customer volume in 2023, while the stronger performance of existing customers during the first five months partially offset the reduction.
+
+#### Composition of the revenue
+
+To better understand the influence of new and existing customers on revenue, I built a query that calculates the percentage contribution to revenue from each of these customer groups.
+
+<details>
+<summary>View SQL query — Customer Contribution in Revenue</summary>
+
+```sql
+WITH monthly_revenue AS (
+    SELECT
+        EXTRACT(YEAR FROM orderdate) AS year,
+        EXTRACT(MONTH FROM orderdate) AS month,
+        
+        SUM(
+            CASE 
+                WHEN cohort_year = EXTRACT(YEAR FROM orderdate)
+                THEN total_net_revenue
+                ELSE 0
+            END
+        ) AS new_customers_revenue,
+        
+        SUM(
+            CASE 
+                WHEN cohort_year < EXTRACT(YEAR FROM orderdate)
+                THEN total_net_revenue
+                ELSE 0
+            END
+        ) AS existing_customers_revenue,
+        
+        SUM(total_net_revenue) AS total_revenue
+        
+    FROM cohort_analysis
+    GROUP BY
+        EXTRACT(YEAR FROM orderdate),
+        EXTRACT(MONTH FROM orderdate)
+)
+
+SELECT
+    year,
+    month,
+    new_customers_revenue,
+    existing_customers_revenue,
+    total_revenue,
+
+    ROUND(
+        (
+            new_customers_revenue / NULLIF(total_revenue, 0) * 100
+        )::numeric,
+        2
+    ) AS new_customers_revenue_percentage,
+
+    ROUND(
+        (
+            existing_customers_revenue / NULLIF(total_revenue, 0) * 100
+        )::numeric,
+        2
+    ) AS existing_customers_revenue_percentage
+
+FROM monthly_revenue
+ORDER BY year, month;
+```
+</details>  
+
+
+![Average Monthly Revenue Contribution by Customer Type and Year](/images/4_customer_revenue_contribution.png)
+
+*Figure 4e. Figure 4e. This chart helps determine the importance of the findings in the following analysis.*
+
+#### Existing Customers Analysis
+
+I segmented the data into cohorts based on each customer's year of first purchase. 
+
+| 2019 | 2020 |
+|:---:|:---:|
+| ![Cohorts Distribution 2019](images/4_cohort_contribution_2019.png) | ![Cohorts Distribution 2020](images/4_cohort_contribution_2020.png) |
+| ![Cohorts Contribution 2019](images/4_cohort_distribution_2019.png) | ![Cohorts Contribution 2020](images/4_cohort_distribution_2020.png) |
+| *Figures 4f. Cohort's contribution to existing customer revenue and monthly variation in the number of existing customers by cohort year in 2019.* | *Figures 4g. Cohort's contribution to existing customer revenue and monthly variation in the number of existing customers by cohort year in 2020.* | 
+
+| 2022 | 2023 |
+|:---:|:---:|
+| ![Cohorts Distribution 2022](images/4_cohort_contribution_2022.png) | ![Cohorts Distribution 2023](images/4_cohort_contribution_2023.png) |
+| ![Cohorts Contribution 2022](images/4_cohort_distribution_2022.png) | ![Cohorts Contribution 2023](images/4_cohort_distribution_2023.png) |
+| *Figures 4h. Cohort's contribution to existing customer revenue and monthly variation in the number of existing customers by cohort year in 2022.* | *Figures 4i. Cohort's contribution to existing customer revenue and monthly variation in the number of existing customers by cohort year in 2023.* | 
+
+#### Insights
+
+**2019 and 2020**:
+
+- The revenue composition chart shows that revenue in both 2019 and 2020 was driven primarily by new customers. This helps explain the sharp revenue decline in 2020: around 65% of revenue came from new customers, and this group declined by 80% compared with 2019.
+
+- The existing customers' contribution to revenue increased in 2020.
+
+- In both years, around 60% of the revenue generated by existing customers came from the two most recent cohort groups. This shows how heavily revenue depended on recently acquired customers.
+
+- The recovery experienced by all cohort groups after the April decline in 2019 helps explain the weaker performance of existing customers in 2020, as none of the cohorts recovered after the decline in May.
+
+
+**2022 and 2023**:
+
+- The revenue composition shifted in 2023. Around 56% of revenue now came from existing customers, making the understanding of existing customer behavior even more important.
+
+- The 2018, 2019, and 2021 cohorts (for 2022) and the 2018, 2019, and 2022 cohorts (for 2023) accounted for roughly 60% of the revenue generated by existing customers.
+
+- Looking at the line charts, cohort groups appear to have recovered more strongly in 2022 than in 2023—especially the 2018 and 2019 cohorts. Given their large contribution to existing customer revenue, this weaker recovery likely contributed to the overall revenue decline in 2023.
 
 
 ### 3. Analyze Order Activity
@@ -281,15 +386,15 @@ To determine whether the revenue declines were concentrated in specific markets 
 
 The analysis shows that the revenue declines observed in 2020 and 2023 were driven by different combinations of factors.
 
-In 2020, the decline was primarily associated with a substantial reduction in customer volume. The decrease in customers was reflected in a strong decline in order volume, while revenue per order showed fluctuations but did not experience a comparable sustained decrease. The analysis of new and existing customers further showed that both groups contributed to the decline, with new customer acquisition weakening throughout the year and existing-customer activity declining significantly from March onward. Overall, the evidence indicates that the 2020 revenue decline is primarily explained by lower customer and order volume, rather than by a substantial reduction in order value.
+In 2020, the decline was primarily associated with a substantial reduction in customer volume. The decrease in customers was reflected in a strong decline in order volume, while revenue per order showed fluctuations but did not experience a comparable sustained decrease. The analysis of new and existing customers further showed that both groups contributed to the decline, with new customer acquisition weakening throughout the year and existing-customer activity declining significantly from March onward. Revenue composition also revealed that approximately 65% of monthly revenue came from new customers, making the business particularly vulnerable to the collapse in customer acquisition. At the same time, around 60% of existing-customer revenue came from the two most recent cohort groups, highlighting a strong dependence on recently acquired customers. Overall, the evidence indicates that the 2020 revenue decline is primarily explained by lower customer and order volume, rather than by a substantial reduction in order value.
 
-In 2023, the decline followed a different pattern. New customer acquisition remained below the previous year's levels, while existing customers showed stronger activity during the first part of the year and partially offset the decline in new customers. Order volume also declined compared with 2022, although it recovered after the sharp drop in April. At the same time, revenue per order declined and remained below the previous year's levels, making the contribution of order volume and order value more balanced than in 2020. Therefore, in 2023 the decline is associated with a combination of lower customer and order volume and lower revenue per order.
+In 2023, the decline followed a different pattern. New customer acquisition remained below the previous year's levels, while existing customers showed stronger activity during the first part of the year and partially offset the decline in new customers. Order volume also declined compared with 2022, although it recovered after the sharp drop in April. At the same time, revenue per order declined and remained below the previous year's levels, making the contribution of order volume and order value more balanced than in 2020. Revenue composition also shifted noticeably: existing customers became the primary revenue driver, contributing around 56% of monthly revenue, making cohort performance considerably more important than in 2020. The cohort analysis showed that the 2018, 2019, and 2022 cohorts accounted for roughly 60% of existing-customer revenue, while the weaker recovery of these key cohorts compared with 2022 likely contributed to the overall revenue decline. Therefore, in 2023 the decline is associated with a combination of lower customer and order volume and lower revenue per order.
 
 The country analysis revealed an additional difference between the two years. In 2020, the revenue decline was widespread across all analyzed countries, with particularly large decreases in Italy and the UK. In 2023, the decline was more concentrated, with the US showing the largest decrease, while Italy was the only country to experience revenue growth.
 
-Overall, the analysis identifies two distinct revenue decline scenarios. In 2020, the decline was primarily driven by a substantial loss of customers and the resulting reduction in order volume. In 2023, the decline was more balanced, with both lower order volume and lower revenue per order contributing to the reduction in revenue. The customer analysis also suggests that the two periods differed in customer dynamics, with a broader deterioration across both new and existing customers in 2020, compared with a stronger recovery in existing-customer activity during part of 2023.
+Overall, the analysis identifies two distinct revenue decline scenarios. In 2020, the decline was primarily driven by a substantial loss of customers and the resulting reduction in order volume, while the revenue mix showed a heavy dependence on new customer acquisition and recently acquired cohorts. In 2023, the decline was more balanced, with both lower order volume and lower revenue per order contributing to the reduction in revenue, while existing customers became the dominant source of revenue and the performance of key cohorts played a larger role in explaining the year's results. These findings suggest that customer acquisition was the critical vulnerability in 2020, whereas customer retention and the performance of established cohorts became increasingly important in 2023.
 
-As a next step, I would investigate the factors behind customer losses and weaker customer acquisition in 2020, as well as the factors contributing to the decline in revenue per order in 2023. A more detailed analysis of customer and product behavior across countries could help identify the specific drivers behind these changes.
+As a next step, I would investigate the factors behind customer losses and weaker customer acquisition in 2020, as well as the reasons behind the weaker recovery of key customer cohorts and the decline in revenue per order in 2023. A more detailed analysis of customer and product behavior across countries could help identify the specific drivers behind these changes.
 
 ## Limitations
 
