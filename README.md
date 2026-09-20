@@ -308,6 +308,8 @@ I segmented the data into cohorts based on each customer's year of first purchas
 
 - Looking at the line charts, cohort groups appear to have recovered more strongly in 2022 than in 2023—especially the 2018 and 2019 cohorts. Given their large contribution to existing customer revenue, this weaker recovery likely contributed to the overall revenue decline in 2023.
 
+- The 23% contribution of the 2022 cohort to existing customer revenue provides an encouraging initial indication of cohort performance, as these customers continued purchasing in their second year as customers.
+
 
 ### 3. Analyze Order Activity
 
