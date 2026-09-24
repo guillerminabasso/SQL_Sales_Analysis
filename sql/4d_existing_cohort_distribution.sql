@@ -18,4 +18,4 @@ WHERE
 
 GROUP BY month, c.cohort_year
 
-ORDER BY c.cohort_year, month;"""
+ORDER BY c.cohort_year, month;
